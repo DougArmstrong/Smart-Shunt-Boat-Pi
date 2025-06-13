@@ -1,0 +1,21 @@
+import bluetooth
+
+# Bluetooth setup
+target_address = "D8:6D:E4:5F:C5:C8"  # Replace with your Smart Shunt's MAC address
+port = 1  # This is commonly used for RFCOMM
+
+try:
+    # Create a Bluetooth socket and connect to the device
+    sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+    sock.connect((target_address, port))
+    print(f"Connected to {target_address}")
+
+    while True:
+        # Receive data from the Smart Shunt
+        data = sock.recv(1024)  # Buffer size of 1024 bytes
+        print("Received:", data.decode('utf-8'))  # Decode the bytes to a string
+
+finally:
+    # Clean up the connection
+    sock.close()
+    print("Connection closed.")
